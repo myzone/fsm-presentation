@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Shower Presentation Engine</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=792, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen.css">
+    <style>
+        .blur {
+            -webkit-filter: grayscale(0.5) blur(7px);
+        }
+        .wfill {
+            width: 100%
+        }
+        .hfill {
+            height: 100%
+        }
+        .vcenter {
+            vertical-align: middle
+        }
+        .inline {
+            display: inline-block
+        }
+
+        .point {
+            margin: 30px 0 0;
+            text-align: center;
+        }
+        h2 {
+            font-size: 50px !important;
+        }
+        h1 {
+            font-size: 80px !important;
+            font-weight: bold;
+        }
+        .black {
+            color: black !important;
+        }
+        .white {
+            color: white !important;
+        }
+        .mask {
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent;
+            -webkit-filter: invert(100%);
+        }
+        .black-border {
+            text-shadow: 0px 15px 20px black;
+        }
+        .slide-title {
+            text-align: center;
+            width: 100%;
+            position: absolute;
+        }
+        .fullscreen-code {
+            margin-left: 55px !important;
+        }
+        .lblock {
+            font-weight: 900;
+            text-align: right;
+            width: 25px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Автоматное программирование</h1>
+    </header>
+
+    <section class="slide cover" style="background: white">
+        <style>
+            .sign {
+                margin: 10px 0 0;
+                text-align: center;
+                color: #FFF;
+                font-style: italic;
+                font-size: 20px;
+            }
+        </style>
+        <div>
+            <br>
+            <br>
+            <h2 class="point"><mark style="background: lightgrey">Автоматное программирование</mark></h2>
+            <p class="sign white"><mark style="background: lightgrey">подготовил <a href="http://vk.com/myzone" class="black">Вячеслав Гольденштейн</a></mark></p>
+            <img class="hfill" src="pictures/guns.jpg" style="left: -240px">
+        </div>
+    </section>
+
+    <section class="slide">
+        <div>
+            <h2>Почему не императивный подход?</h2>
+            <figure>
+                <blockquote>
+                    <p>При императивном подходе состояние программых описывается лишь состоянием памяти, используемой программой.</p>
+                </blockquote>
+                <figcaption>wiki</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div>
+            <figure>
+                <h2>Автоматный подход</h2>
+                <blockquote>
+                    <p>При автоматном подходе состояние программы классифицируется при помощи текущего состояния автомата, моделируемого программой.</p>
+                </blockquote>
+                <figcaption>wiki</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="slide" style="background: white">
+        <div>
+            <img src="pictures/f1.png" style="height: 40px">
+            <ul>
+                <li><img src="pictures/f2.png"> — входной алфавит (конечное множество входных символов), из которого формируются входные цепочки, допускаемые конечным автоматом;</li>
+                <li><img src="pictures/f3.png"> — множество состояний;</li>
+                <li><img src="pictures/f4.png"> — начальное состояние <img src="pictures/f5.png">;</li>
+                <li><img src="pictures/f6.png"> — множество заключительных состояний <img src="pictures/f7.png">;</li>
+                <li><img src="pictures/f8.png"> — функция переходов.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div>
+            <h2>Виды автоматов</h2>
+            <table>
+                <tr>
+                    <td></td>
+                    <th>Мили</th>
+                    <th>Мура</th>
+                </tr>
+                <tr>
+                    <th>Детерменированный</th>
+                    <td><mark>1</mark></td>
+                    <td><mark style="background: lightgrey">2</mark></td>
+                </tr>
+                <tr>
+                    <th>Недетерменированный</th>
+                    <td><mark style="background: lightgrey">3</mark></td>
+                    <td><mark style="background: white">4</mark></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2 class="slide-title">Регулярные выражения</h2>
+        <div>
+            <pre><code>hi!*</code><code> </code></pre>
+            <img class="wfill" src="pictures/nd-fst.png">
+            <br>
+            <br>
+            <p class="note"><span class="lblock">*</span>Недетерменированный конечный автомат<br><span class="lblock">**</span>$ - пустая цепочка</p>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2 class="slide-title">Генераторы</h2>
+        <div>
+            <img class="wfill" src="pictures/nd-fst.png">
+            <pre>
+                <code>hi!</code>
+                <code>hi</code>
+                <code>hi!!</code>
+                <code>hi!!!!!!</code>
+                <code>hi!</code>
+            </pre>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div>
+            <h2>Пример</h2>
+            <blockquote>
+                Требуется написать на языке Си программу, читающую из потока стандартного ввода текст, состоящий из строк, и для каждой строки печатающую первое слово этой строки и перевод строки.
+            </blockquote>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2 class="slide-title">Императивный подход</h2>
+        <br>
+        <pre class="fullscreen-code">
+            <code>int main() {</code>
+            <code>    int c;</code>
+            <code>    do {</code>
+            <code>        c = getchar();</code>
+            <code>        while (c == ' ') c = getchar();</code>
+            <code>        while (c != ' ' && c != '\n' && c != EOF)</code>
+            <code>            putchar(c), c = getchar();</code>
+            <code>        putchar('\n');</code>
+            <code>        while (c != '\n' && c != EOF) c = getchar();</code>
+            <code>    } while (c != EOF);</code>
+            <code>    return 0;</code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide cover" style="background: white">
+        <h2 class="slide-title">Граф переходов для примера</h2>
+        <img class="wfill hfill" src="pictures/example-graph.svg">
+    </section>
+
+    <section class="slide">
+        <h2 class="slide-title">Автоматный подход <mark>1/2</mark></h2>
+        <br>
+        <pre class="fullscreen-code">
+            <code>enum states_t { <mark style="background: lightblue">before</mark>, <mark style="background: orchid">inside</mark>, <mark style="background: cyan">after</mark>, <mark style="background: greenyellow">end</mark> };</code>
+            <code> </code>
+            <code>void step(enum state_t &state, int &c);</code>
+            <code> </code>
+            <code>int main() {</code>
+            <code>  enum state_t state = before;</code>
+            <code> </code>
+            <code>  while (state != end) </code>
+            <code>    step(&state, getchar());</code>
+            <code> </code>
+            <code>  return 0;</code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2 class="slide-title">Автоматный подход <mark>2/2</mark></h2>
+        <br>
+        <pre class="fullscreen-code">
+            <code>void step(enum state_t &state, int &c) {</code>
+            <code>  switch (state) {</code>
+            <code><mark style="background: lightblue">    case before: if (c == EOF) state = end;</mark></code>
+            <code><mark style="background: lightblue">      else if (c == '\n') putchar('\n'), state = before;</mark></code>
+            <code><mark style="background: lightblue">      else if (c != ' ') putchar(c), state = inside; break;</mark></code>
+            <code><mark style="background: orchid">    case inside: if (c == EOF) state = end;</mark></code>
+            <code><mark style="background: orchid">      else if (c == '\n') putchar('\n'), state = before;</mark></code>
+            <code><mark style="background: orchid">      else if (c == ' ') state = after;</mark></code>
+            <code><mark style="background: orchid">      else putchar(c); break;</mark></code>
+            <code><mark style="background: cyan">    case after: if (c == '\n') putchar('\n'), state = before; break;</mark></code>
+            <code><mark style="background: greenyellow">    case end: break;</mark></code>
+            <code>  }</code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide shout">
+        <h2>Калькулятор</h2>
+    </section>
+
+    <section class="slide cover" style="background: white">
+        <h2 class="slide-title">Граф переходов калькулятора</h2>
+        <img class="wfill" style="top: 150px;" src="pictures/calc-fsm.jpg">
+    </section>
+
+    <section class="slide shout">
+        <div>
+            <h4>Преимущества</h4>
+            <ul><ul>
+                <li>Тестируемость</li>
+                <li>Производительность</li>
+                <li>Дружественнось к отладке</li>
+                <li>Воспроизводимость</li>
+            </ul></ul>
+            <h4>Недостатки</h4>
+            <ul><ul>
+                <li>Сложность</li>
+                <li>Недружественнось к расширению</li>
+                <li>Легкость создания "суржика"</li>
+            </ul></ul>
+        </div>
+    </section>
+
+    <section class="slide">
+        <style>
+            .contact-icon {
+                width: 32px;
+                height: 32px;
+                margin: 3px;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+        </style>
+        <div>
+            <h1 class="black">Спасибо</h1>
+            <h2 class="black">за внимание!</h2>
+
+            <div><img class="contact-icon" src="pictures/mail-icon.jpg">vyacheslav.goldenshteyn@gmail.com</div>
+            <div><img class="contact-icon" src="pictures/github-icon.jpg">github.com/myzone</div>
+            <div><img class="contact-icon" src="pictures/vk-icon.jpg">vk.com/myzone</div>
+            <div><img class="contact-icon" src="pictures/skype-icon.jpg">my.zo.ne</div>
+
+            <img style="position: absolute; top:25%; left: 56%; height:70%" src="pictures/contacts-qr.gif">
+        </div>
+    </section>
+
+	<div class="progress"><div></div></div>
+	<script src="shower/shower.min.js"></script>
+</body>
+</html>
