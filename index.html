@@ -56,6 +56,9 @@
         .fullscreen-code {
             margin-left: 55px !important;
         }
+        .more-code code {
+            font-size: 21px !important;
+        }
         .lblock {
             font-weight: 900;
             text-align: right;
@@ -93,7 +96,7 @@
             <h2>Почему не императивный подход?</h2>
             <figure>
                 <blockquote>
-                    <p>При императивном подходе состояние программых описывается лишь состоянием памяти, используемой программой.</p>
+                    <p>При императивном подходе состояние программы описывается лишь состоянием памяти, используемой программой.</p>
                 </blockquote>
                 <figcaption>wiki</figcaption>
             </figure>
@@ -203,21 +206,21 @@
 
     <section class="slide cover" style="background: white">
         <h2 class="slide-title">Граф переходов для примера</h2>
-        <img class="wfill hfill" src="pictures/example-graph.svg">
+        <img class="wfill hfill" src="pictures/example-fsm-graph.svg">
     </section>
 
     <section class="slide">
         <h2 class="slide-title">Автоматный подход <mark>1/2</mark></h2>
         <br>
         <pre class="fullscreen-code">
-            <code>enum states_t { <mark style="background: lightblue">before</mark>, <mark style="background: orchid">inside</mark>, <mark style="background: cyan">after</mark>, <mark style="background: greenyellow">end</mark> };</code>
+            <code>enum states_t { <mark style="background: lightblue">BEFORE</mark>, <mark style="background: orchid">INSIDE</mark>, <mark style="background: cyan">AFTER</mark>, <mark style="background: greenyellow">END</mark> };</code>
             <code> </code>
             <code>void step(enum state_t &state, int &c);</code>
             <code> </code>
             <code>int main() {</code>
-            <code>  enum state_t state = before;</code>
+            <code>  enum state_t state = BEFORE;</code>
             <code> </code>
-            <code>  while (state != end) </code>
+            <code>  while (state != END) </code>
             <code>    step(&state, getchar());</code>
             <code> </code>
             <code>  return 0;</code>
@@ -228,18 +231,19 @@
     <section class="slide">
         <h2 class="slide-title">Автоматный подход <mark>2/2</mark></h2>
         <br>
-        <pre class="fullscreen-code">
+        <pre class="fullscreen-code more-code">
             <code>void step(enum state_t &state, int &c) {</code>
             <code>  switch (state) {</code>
-            <code><mark style="background: lightblue">    case before: if (c == EOF) state = end;</mark></code>
-            <code><mark style="background: lightblue">      else if (c == '\n') putchar('\n'), state = before;</mark></code>
-            <code><mark style="background: lightblue">      else if (c != ' ') putchar(c), state = inside; break;</mark></code>
-            <code><mark style="background: orchid">    case inside: if (c == EOF) state = end;</mark></code>
-            <code><mark style="background: orchid">      else if (c == '\n') putchar('\n'), state = before;</mark></code>
-            <code><mark style="background: orchid">      else if (c == ' ') state = after;</mark></code>
+            <code><mark style="background: lightblue">    case BEFORE: if (c == EOF) state = END;</mark></code>
+            <code><mark style="background: lightblue">      else if (c == '\n') putchar('\n');</mark></code>
+            <code><mark style="background: lightblue">      else if (c != ' ') putchar(c), state = INSIDE; break;</mark></code>
+            <code><mark style="background: orchid">    case INSIDE: if (c == EOF) state = END;</mark></code>
+            <code><mark style="background: orchid">      else if (c == '\n') putchar('\n'), state = BEFORE;</mark></code>
+            <code><mark style="background: orchid">      else if (c == ' ') state = AFTER;</mark></code>
             <code><mark style="background: orchid">      else putchar(c); break;</mark></code>
-            <code><mark style="background: cyan">    case after: if (c == '\n') putchar('\n'), state = before; break;</mark></code>
-            <code><mark style="background: greenyellow">    case end: break;</mark></code>
+            <code><mark style="background: cyan">    case AFTER: if (c == EOF) state = END;</mark></code>
+            <code><mark style="background: cyan">      else if (c == '\n') putchar('\n'), state = BEFORE; break;</mark></code>
+            <code><mark style="background: greenyellow">    case END: break;</mark></code>
             <code>  }</code>
             <code>}</code>
         </pre>
@@ -251,10 +255,41 @@
 
     <section class="slide cover" style="background: white">
         <h2 class="slide-title">Граф переходов калькулятора</h2>
-        <img class="wfill" style="top: 150px;" src="pictures/calc-fsm.jpg">
+        <img class="wfill hfill" src="pictures/calc-fsm-graph.svg">
     </section>
 
-    <section class="slide shout">
+    <section class="slide cover">
+        <img src="pictures/be-alert.jpg" class="hfill" style="left: 27%">
+    </section>
+
+    <section class="slide">
+        <h2 class="slide-title" style="margin-left: -20px;">Неявная недетерменированность<mark>1/2</mark></h2>
+        <br>
+        <br>
+        <pre class="fullscreen-code more-code">
+            <code>void step(enum state_t* state, struct model_t* model, enum sinal_t sinal) {</code>
+            <code>  switch (*state) {</code>
+            <code>    case INITIAL_STATE:</code>
+            <code>      switch (sinal) {</code>
+            <code>        case DIGIT_0:</code>
+            <code><mark>          if (!strcmp(model->display_text, "0")) {</mark></code>
+            <code><mark>              return <mark style="background: lightcoral">INITIAL_STATE</mark>;</mark></code>
+            <code><mark>          }</mark></code>
+            <code>        case DIGIT_1:</code>
+            <code>        ...</code>
+            <code>        case DIGIT_9:</code>
+            <code>          return <mark style="background: lightcoral">AFTER_DIGIT_IN_LARG</mark>;</code>
+        </pre>
+    </section>
+
+
+    <section class="slide cover" style="background: white">
+        <h2 class="slide-title">Неявная недетерменированность<mark>2/2</mark></h2>
+        <img class="wfill" style="top: 10%; height: 87%" src="pictures/failure-example-graph.svg">
+    </section>
+
+    <section class="slide">
+        <h2 class="slide-title">Подводим итоги</h2>
         <div>
             <h4>Преимущества</h4>
             <ul><ul>
